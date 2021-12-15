@@ -65,7 +65,6 @@ table_of_interest_bubble <- function(date, type){
   
   # calculate mean values of each site if more than one record is found
   selected_entry_mean <- aggregate(.~Site, data = selected_entry, mean)
-  
   return(selected_entry_mean)
 }
 
@@ -76,7 +75,7 @@ plot_map <- function(date, type, plot_type){
     data_table <- table_of_interest(date, type)
     map("county", regions = "Michigan", fill = TRUE, col = data_table$color_code,  
         resolution = 1, lty = 1, projection = "polyconic", 
-        myborder = 1, mar = c(1,1,1,1))
+        myborder = 1, mar = c(1, 1, 1, 1))
   } else {
     # if bubble plot is selected by user, plot bubble plot. Data variable selected by user will be plotted
     if (type == "PM 2.5"){
@@ -84,8 +83,8 @@ plot_map <- function(date, type, plot_type){
       mybreaks <- c(12, 35.5, 55.5, 150.5)
       ggplot() +
         geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "grey") +
-        geom_point(data = table_of_interest_bubble(date, type), aes(x=Long, y=Lat, size = PM2.5, color = PM2.5)) +
-        scale_size_continuous(name="PM2.5", range=c(1,10)) +
+        geom_point(data = table_of_interest_bubble(date, type), aes(x = Long, y = Lat, size = PM2.5, color = PM2.5)) +
+        scale_size_continuous(name = "PM2.5", range = c(1, 10)) +
         scale_color_viridis(name = "PM2.5", breaks = mybreaks) +
         theme_void() + coord_map() +
         guides(color = guide_legend()) +
@@ -95,8 +94,8 @@ plot_map <- function(date, type, plot_type){
       mybreaks <- c(50, 100, 150, 200, 300)
       ggplot() +
         geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "grey") +
-        geom_point(data = table_of_interest_bubble(date, type), aes(x=Long, y=Lat, size = AQI, color = AQI)) +
-        scale_size_continuous(name="AQI", range=c(1,10)) +
+        geom_point(data = table_of_interest_bubble(date, type), aes(x = Long, y = Lat, size = AQI, color = AQI)) +
+        scale_size_continuous(name = "AQI", range = c(1, 10)) +
         scale_color_viridis(name = "AQI", breaks = mybreaks) +
         theme_void() + coord_map() +
         guides(color = guide_legend()) +
