@@ -1,6 +1,6 @@
-# code contributors: Stuart Brabbs (implement bubble plot) and Yun Zhang (construct Shiny App)
+# code contributors: Stuart Brabbs (implement bubble plot) and Yun Zhang (impletment county map and construct Shiny App)
 
-# Load required libraries
+# load required libraries
 library(shiny)
 library(shinydashboard)
 library(maps)
