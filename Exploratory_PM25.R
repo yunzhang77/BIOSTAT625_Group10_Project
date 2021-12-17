@@ -14,6 +14,12 @@ for (i in county) {
                  mean(air_pollution_data$`Daily Mean PM2.5 Concentration`[air_pollution_data$COUNTY==i]))
 }
 
+mean_AQI <- c()
+for (i in county) {
+  mean_AQI <- c(mean_AQI, 
+                 mean(air_pollution_data$DAILY_AQI_VALUE[air_pollution_data$COUNTY==i]))
+}
+
 # county population 
 countypop <- c(120502, 103856, 36785, 406211, 284900, 261670, 657974, 2046, 99423, 881217, 25032, 
                15052, 1274395, 296200, 160383, 8047, 372258, 1793561)
@@ -25,7 +31,16 @@ ggplot(data = df, aes(x = county, y = mean_pm25)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   xlab("County") +
   ylab("Mean PM2.5") +
+  scale_x_discrete(guide = guide_axis(angle = 45)) +
   labs(title = "2019 Mean PM2.5 Concentration by County")
+
+# make bar plot of mean AQI by county
+ggplot(data = df, aes(x = county, y = mean_AQI)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  xlab("County") +
+  ylab("Mean AQI") +
+  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  labs(title = "2019 Mean AQI by County")
 
 # make scatter plot showing PM2.5 concentration by county population
 ggplot(data = df, aes(x = countypop, y = mean_pm25)) +
@@ -33,4 +48,11 @@ ggplot(data = df, aes(x = countypop, y = mean_pm25)) +
   xlab("County Population") +
   ylab("Mean PM2.5") +
   labs(title = "2019 Mean PM2.5 Concentration Scatterplot by County Population")
+
+# make scatter plot showing AQI by county population
+ggplot(data = df, aes(x = countypop, y = mean_AQI)) +
+  geom_point(color = "steelblue", size = 2.5) +
+  xlab("County Population") +
+  ylab("Mean AQI") +
+  labs(title = "2019 Mean AQI Scatterplot by County Population")
 
