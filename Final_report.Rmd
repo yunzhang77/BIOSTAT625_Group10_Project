@@ -109,7 +109,7 @@ grid.arrange(PM2.5_plot, AQI_plot, nrow = 1)
 ```
 
 ### Interactive Visulization Using Shiny
-```{r echo = FALSE, message = FALSE}
+```{r echo = FALSE, message = FALSE, warning = FALSE}
 # load required libraries
 library(shiny)
 library(shinydashboard)
