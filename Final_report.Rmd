@@ -276,4 +276,4 @@ fluidRow(
 ## <font size="5">Group Member Contributions</font>
 **Stuart Brabbs:** Data processing, generating data exploratory figures, generating bubble plot for Shiny app, and writing final report.  
 **Nathan Kernik:** Compiling final report.  
-**Yun Zhang:** Generating county map for Shiny app, constructing Shiny app, maintaining GitHub repository, and writing final report. 
+**Yun Zhang:** Generating county map for Shiny app, constructing Shiny app, maintaining GitHub repository, writing final report, and publishing final report to shinyapps.io. 
