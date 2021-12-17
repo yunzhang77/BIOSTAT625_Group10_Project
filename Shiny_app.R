@@ -82,7 +82,7 @@ plot_map <- function(date, type, plot_type){
       data_table <- table_of_interest(date, type)
       mybreaks <- c(12, 35.5, 55.5, 150.5)
       ggplot() +
-        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "grey") +
+        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "white", color = "black") +
         geom_point(data = table_of_interest_bubble(date, type), aes(x = Long, y = Lat, size = PM2.5, color = PM2.5)) +
         scale_size_continuous(name = "PM2.5", range = c(1, 10)) +
         scale_color_viridis(name = "PM2.5", breaks = mybreaks) +
@@ -93,7 +93,7 @@ plot_map <- function(date, type, plot_type){
       data_table <- table_of_interest(date, type)
       mybreaks <- c(50, 100, 150, 200, 300)
       ggplot() +
-        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "grey") +
+        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "white", color = "black") +
         geom_point(data = table_of_interest_bubble(date, type), aes(x = Long, y = Lat, size = AQI, color = AQI)) +
         scale_size_continuous(name = "AQI", range = c(1, 10)) +
         scale_color_viridis(name = "AQI", breaks = mybreaks) +
