@@ -1,5 +1,5 @@
 ---
-title: "Interactive Visualization of Air Quality Data in Michigan"
+title: <font size="6">Interactive Visualization of Air Quality Data in Michigan</font>
 author: "Stuart Brabbs, Nathan Kernik, Yun Zhang"
 output: html_document
 #output: pdf_document
@@ -7,51 +7,49 @@ runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE)
 ```
-## GitHub Repository
+## <font size="5">GitHub Repository</font>
 
 https://github.com/yunzhang77/BIOSTAT625_Group10_Project
 
-## Background
-  PM2.5 refers to particulate matter with a diameter equal to or less than 2.5 microns. PM2.5 is one of the major outdoor pollutants. It is primarily generated from combustion, such as fireplaces, car engines, coal (or natural gas-fired) power plants. PM2.5 is a leading environmental cause of poor health and premature death. Exposure to PM2.5 is associated with increased risk of heart attack, lung cancer, asthma, and low birth weight. People with existing lung and heart conditions, children, and seniors are at the greatest risk of PM2.5 exposure. In the United States, approximately 60,000-100,000 cases of premature death are associated with PM2.5 each year. Air Quality Index (AQI) is a standardized measurement of air quality that incorporates several major pollutants, including PM2.5. As a result, AQI and PM2.5 are highly correlated. AQI of less than 50 is considered healthy, and 300 or above hazardous. PM2.5 concentration of 12.0 $\mu g/m^3$ is considered healthy by the EPA (see https://www.epa.gov/sites/default/files/2016-04/documents/2012_aqi_factsheet.pdf for current EPA standards).
+## <font size="5">Background</font>
+  PM2.5 refers to particulate matter with a diameter equal to or less than 2.5 microns. PM2.5 is one of the major outdoor pollutants. It is primarily generated from combustion, such as fireplaces, car engines, coal (or natural gas-fired) power plants. PM2.5 is a leading environmental cause of poor health and premature death. Exposure to PM2.5 is associated with increased risk of heart attack, lung cancer, asthma, and low birth weight. People with existing lung and heart conditions, children, and seniors are at the greatest risk of PM2.5 exposure. In the United States, approximately 60,000-100,000 cases of premature death are associated with PM2.5 each year. Air Quality Index (AQI) is a standardized measurement of air quality that incorporates several major pollutants, including PM2.5. As a result, AQI and PM2.5 are highly correlated. AQI of less than 50 is considered healthy, and 300 or above hazardous. PM2.5 concentration of 12.0 $\mu g/m^3$ is considered healthy by the EPA [1].
 
-## Question of Interest:
-  We would like to identify whether there is an association between PM2.5 concentration and the relative location of the counties and monitoring sites in Michigan, as well as any patterns over time.  
+## <font size="5">Question of Interest</font>
+  We would like to identify whether there is an association between PM2.5 concentration and the relative location of the counties and monitoring sites in Michigan, as well as any patterns over time.
 
-## Hypothesis:
-  There will be higher PM2.5 concentration in urban and industrial areas, such as the Detroit and Grand Rapids metro areas. PM2.5 might also be linked with season changes and broader weather patterns (e.g., wildfires).
+## <font size="5">Hypothesis</font>
+  We suspect there will be higher PM2.5 concentration in urban and industrial areas, such as the Detroit and Grand Rapids metro areas, and that PM2.5 might also be linked with season changes and broader weather patterns (e.g., wildfires).
 
-## Data Set
-  We will be using daily air quality data downloaded from the United States Environmental Protection Agency (EPA) for the state of Michigan for the years 2019 and 2020, particularly with PM2.5 as the pollutant of interest. The data has 19 columns and 7,763 rows. Each row represents daily PM2.5 and AQI entries from a data collection point in a Michigan county. We note that the data set does not contain information for every county in Michigan, but contains data from the largest counties by population and a good geographic spread of others. The lack of data from each county will need to be accounted for in visualization. We account for this lack by also creating plots by monitoring site instead of county.
+## <font size="5">Data Set</font>
+  We will be using daily air quality data downloaded from the United States Environmental Protection Agency (EPA) for the state of Michigan for the years 2019 and 2020, particularly with PM2.5 as the pollutant of interest. The data has 19 columns and 7,763 rows. Each row represents daily PM2.5 and AQI entries from a data collection point in a Michigan county. We note that the data set does not contain information for every county in Michigan, but contains data from the largest counties by population and a good geographic spread of others. The lack of data from each county will need to be accounted for in visualization. We account for this lack by also creating bubble plots by monitoring site instead of county.
 
-## Methods
+## <font size="5">Methods</font>
   In order to generate interactive visualization of air quality data in Michigan counties, we utilized Shiny, Maps, and ggplot2 packages in R.  
 
-  Our overall workflow contains the following steps:  
+  Our overall workflow contained the following steps:  
 
 **1. Data acquisition and processing**  
-  Data acquisition and processing is performed by Stuart Brabbs. In short, air quality data was downloaded from [EPA](https://www.epa.gov/outdoor-air-quality-data/download-daily-data) and stored as .Rds files for future access. Data from both 2019 and 2020 were downloaded and we mainly used data from 2019 to construct the Shiny app. Inclusion from other data could be easily acomplished by modifying a few parameters in this step.  
+  Data acquisition and processing was performed by Stuart Brabbs. Air quality data was downloaded from the [EPA](https://www.epa.gov/outdoor-air-quality-data/download-daily-data) and stored as .Rds files for future access. Data from both 2019 and 2020 were downloaded, though we mainly used data from 2019 to construct the Shiny app. Inclusion from other data could be easily acomplished by modifying a few parameters in this step to expand the data frame.
   
 **2. Exploring dataset**  
-  Once data was downloaded and processes, we started with exploring the dataset by plotting bar plot of air pollution data and scatter plot showing the relationship between county population and air quality. This step provided us some basic information about the data and insights on how to build Shiny app from this dataset. This step was performed by Stuart Brabbs and corresponding code is stored in `Exploratory_PM25.R` in the GitHub repository.  
+  Once data was downloaded and processed, we started with exploring the dataset with a bar plot of air pollution data and scatter plot showing the relationship between county population and air quality. This step provided us some basic information about the data and insights on how to build Shiny app from this dataset. This step was performed by Stuart Brabbs and corresponding code is stored in `Exploratory_PM25.R` in the GitHub repository. Though not a perfect trend, there did appear to be a positive relationship between county population and mean levels of pollution, with more populous areas (e.g., Wayne County) having higher levels and very rural counties (e.g., Keweenaw County) having significantlly lower levels.
   
 **3. Building Shiny app**  
-  After the data exploratory process is completed, we noticed that air quality data obtained from EPA only contained 18 counties (out of 83 counties in total). Therefore, we decided to implement both AQI and PM2.5 data when building the Shiny app and also include bubble plot to better improve the visualization. Other approximation methods might not be practical, considering air quality data from most of the counties are missing. Because Shiny offers interactive environment for user to specify certain inputs, we decided to add three different widgets asking for user inputs: `data varible`, `plot type`, and `date`. The code will first calculate a 10-day average of air quality based on the time the user specifies, and then generate the corresponding plots that user prefers. For county map, we color-coded each county based on the level of either PM2.5 or AQI. The scale of air quality was also obtained from EPA. For bubble map, we used coordinates from each air quality measuring station for plotting. Moreover, we included a boxplot next to the county map/bubble plot to show the range of air quality on the date that user specifies. The framework of Shiny app was built by Yun Zhang. Implementation of county map was performed by Yun Zhang using Maps package and implementation of bubble map was performed by Stuart Brabbs using ggplot2 package. 
+  When exploring the data, we noticed that air quality data obtained from EPA only contained 18 counties (out of 83 counties in total). Therefore, we decided to implement both AQI and PM2.5 data when building the Shiny app and also include bubble plot to better improve the visualization. Other approximation methods might not be practical, considering air quality data from most of the counties are missing. Because Shiny offers interactive environment for user to specify certain inputs, we decided to add three different widgets asking for user inputs: `data variable`, `plot type`, and `date`. The code will first calculate a 10-day average of air quality based on the time the user specifies, and then generate the corresponding plots that user prefers. For county map, we color-coded each county based on the level of either PM2.5 or AQI. The scale of air quality was also obtained from EPA. For bubble map, we used coordinates from each air quality measuring station for plotting. Moreover, we included a boxplot next to the county map/bubble plot to show the range of air quality on the date that user specifies. The framework of Shiny app was built by Yun Zhang. Implementation of county map was performed by Yun Zhang using Maps package and implementation of bubble map was performed by Stuart Brabbs using ggplot2 package.
   
 
-## Results
-  
+## <font size="5">Results</font>
+  Through both the AQI and PM2.5 plots over time, we can see that levels are clearly higher overall in the larger urban areas, particularly areas around Metro Detroit and to a lesser extent Grand Rapids. Northern Michigan, and especially the Upper Peninsula, generally showed much lower levels than the more urban south. We also were able to observe a seasonal pattern, where pollution was 
 
-### Data Exploratory Plots
-```{r echo = FALSE, warning = FALSE, fig.width = 6, fig.height = 4, fig.align = "center"}
+### <font size="5">Data Exploratory Plots</font>
+```{r echo = FALSE, warning = FALSE, fig.width = 8, fig.height = 4, fig.align = "center"}
 # Load required libraries
 library(ggplot2)
 library(gridExtra)
-
 # import air pollution data
 air_pollution_data <- readRDS("data/data2019.rds")
-
 # identify counties with data and generate new data frame to store result
 county <- unique(air_pollution_data$COUNTY)
 mean_pm25 <- c()
@@ -59,18 +57,15 @@ for (i in county) {
   mean_pm25 <- c(mean_pm25, 
                  mean(air_pollution_data$`Daily Mean PM2.5 Concentration`[air_pollution_data$COUNTY==i]))
 }
-
 mean_AQI <- c()
 for (i in county) {
   mean_AQI <- c(mean_AQI, 
                  mean(air_pollution_data$DAILY_AQI_VALUE[air_pollution_data$COUNTY==i]))
 }
-
 # county population 
 countypop <- c(120502, 103856, 36785, 406211, 284900, 261670, 657974, 2046, 99423, 881217, 25032, 
                15052, 1274395, 296200, 160383, 8047, 372258, 1793561)
 df <- data.frame(county, countypop, mean_pm25)
-
 # make bar plot of mean PM2.5 by county
 PM2.5_plot <- ggplot(data = df, aes(x = county, y = mean_pm25)) +
   geom_bar(stat = "identity", fill = "steelblue") +
@@ -78,7 +73,6 @@ PM2.5_plot <- ggplot(data = df, aes(x = county, y = mean_pm25)) +
   ylab("Mean PM2.5") +
   scale_x_discrete(guide = guide_axis(angle = 45)) +
   labs(title = "2019 Mean PM2.5 by County")
-
 # make bar plot of mean AQI by county
 AQI_plot <- ggplot(data = df, aes(x = county, y = mean_AQI)) +
   geom_bar(stat = "identity", fill = "steelblue") +
@@ -86,30 +80,27 @@ AQI_plot <- ggplot(data = df, aes(x = county, y = mean_AQI)) +
   ylab("Mean AQI") +
   scale_x_discrete(guide = guide_axis(angle = 45)) +
   labs(title = "2019 Mean AQI by County")
-
 grid.arrange(PM2.5_plot, AQI_plot, nrow = 1)
 ```
 
-```{r echo = FALSE, warning = FALSE, fig.width = 6, fig.height = 4, fig.align = "center"}
+```{r echo = FALSE, warning = FALSE, fig.width = 8, fig.height = 4, fig.align = "center"}
 # make scatter plot showing PM2.5 concentration by county population
 PM2.5_plot <- ggplot(data = df, aes(x = countypop, y = mean_pm25)) +
   geom_point(color = "steelblue", size = 2.5) +
   xlab("County Population") +
   ylab("Mean PM2.5") +
   labs(title = "2019 Mean PM2.5 by Pop.")
-
 # make scatter plot showing AQI by county population
 AQI_plot <- ggplot(data = df, aes(x = countypop, y = mean_AQI)) +
   geom_point(color = "steelblue", size = 2.5) +
   xlab("County Population") +
   ylab("Mean AQI") +
   labs(title = "2019 Mean AQI by Population")
-
 grid.arrange(PM2.5_plot, AQI_plot, nrow = 1)
 ```
 
-### Interactive Visulization Using Shiny
-```{r echo = FALSE, message = FALSE, warning = FALSE}
+### <font size="5">Interactive Visulization Using Shiny</font>
+```{r echo = FALSE, message = FALSE}
 # load required libraries
 library(shiny)
 library(shinydashboard)
@@ -126,20 +117,16 @@ library(plotly)
 michigan <- map_data("county", "michigan")
 air_pollution_data <- readRDS("data/data2019.rds")
 date <- as.Date(air_pollution_data$Date)
-
 # generate processed data for plotting county map 
 air_pollution_data_trimmed_county <- data.frame(date, air_pollution_data$`Daily Mean PM2.5 Concentration`, 
                                                  air_pollution_data$DAILY_AQI_VALUE, air_pollution_data$COUNTY)
 colnames(air_pollution_data_trimmed_county) <- c("Date", "PM2.5", "AQI", "County")
-
 # change the name of "St. Clair" county to match map data
 air_pollution_data_trimmed_county$County[air_pollution_data_trimmed_county$County == "St. Clair"] <- "St Clair"
-
 # generate list of Michigan counties from Maps package for visualization
 county_names <- map("county", regions = "Michigan", namesonly = TRUE, plot = FALSE)
 county_names <- as.data.frame(str_to_title(sub("michigan,", "", county_names)))
 colnames(county_names) <- "County"
-
 # generate processed data for plotting bubble map
 air_pollution_data_trimmed_bubble <- data.frame(date, air_pollution_data$`Daily Mean PM2.5 Concentration`, 
                                                  air_pollution_data$DAILY_AQI_VALUE, air_pollution_data$`Site ID`,
@@ -147,7 +134,6 @@ air_pollution_data_trimmed_bubble <- data.frame(date, air_pollution_data$`Daily 
 colnames(air_pollution_data_trimmed_bubble) <- c("Date", "PM2.5", "AQI", "Site", "Lat", "Long")
 sitenames <- as.data.frame(unique(air_pollution_data_trimmed_bubble$Site))
 colnames(sitenames) <- c("Site")
-
 # function that generates tables based on user input - returns a df contains average of 10-days data 
 table_of_interest <- function(date, type){
   date <- as.Date(date)
@@ -168,7 +154,6 @@ table_of_interest <- function(date, type){
     return(data_display)
   }
 }
-
 # function that generates tables based on user input - returns a df contains average of 10-days data for bubble plot
 table_of_interest_bubble <- function(date, type){
   date <- as.Date(date)
@@ -178,7 +163,6 @@ table_of_interest_bubble <- function(date, type){
   selected_entry_mean <- aggregate(.~Site, data = selected_entry, mean)
   return(selected_entry_mean)
 }
-
 # function to generate plots based on user input
 plot_map <- function(date, type, plot_type){
   # if county map is selected by user, plot county map
@@ -193,7 +177,7 @@ plot_map <- function(date, type, plot_type){
       data_table <- table_of_interest(date, type)
       mybreaks <- c(12, 35.5, 55.5, 150.5)
       ggplot() +
-        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "grey") +
+        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "white", color = "black") +
         geom_point(data = table_of_interest_bubble(date, type), aes(x = Long, y = Lat, size = PM2.5, color = PM2.5)) +
         scale_size_continuous(name = "PM2.5", range = c(1, 10)) +
         scale_color_viridis(name = "PM2.5", breaks = mybreaks) +
@@ -204,7 +188,7 @@ plot_map <- function(date, type, plot_type){
       data_table <- table_of_interest(date, type)
       mybreaks <- c(50, 100, 150, 200, 300)
       ggplot() +
-        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "grey") +
+        geom_polygon(data = michigan, aes(x = long, y = lat, group = group), fill = "white", color = "black") +
         geom_point(data = table_of_interest_bubble(date, type), aes(x = Long, y = Lat, size = AQI, color = AQI)) +
         scale_size_continuous(name = "AQI", range = c(1, 10)) +
         scale_color_viridis(name = "AQI", breaks = mybreaks) +
@@ -214,7 +198,6 @@ plot_map <- function(date, type, plot_type){
     }
   }
 }
-
 # functions that return HEX color code based on PM2.5 value. White is returned if missing value. 
 PM25_level <- function(PM25){
   PM25 <- as.numeric(PM25)
@@ -227,7 +210,6 @@ PM25_level <- function(PM25){
   else if (250.5 <= PM25) {return("#750000")}
   else {return("#FFFFFF")}
 }
-
 # functions that return HEX color code based on AQI value. White is returned if missing value. 
 AQI_level <- function(AQI){
   AQI <- as.numeric(AQI)
@@ -240,24 +222,20 @@ AQI_level <- function(AQI){
   else if (300 < AQI) {return("#750000")}
   else {return("#FFFFFF")}
 }
-
 ############ SHINY in HTML ############
 # selet input for user to choose data variable (PM2.5 or AQI)
 select_input <- selectInput("var", 
                   label = "Choose variable to plot:", 
                   choices = list("AQI", "PM 2.5"),
                   selected = "PM 2.5")
-
 # radio button for user to choose which type of plot to draw
 radio_button <- radioButtons("plot_type", label = "Select plot type:",
              choices = list("County Map" = 1, "Bubble Plot" = 2), selected = 1)
-
 # slider bar for user to choose date of interest
 slider <- sliderInput("slider",
             label = "Time",
             min = as.Date("2019-01-01"), max = as.Date("2019-12-31"),
             value = as.Date("2019-01-01"), timeFormat = "%F", step = 10)
-
 # change input layout 
 fluidRow(
   column(4, select_input),
@@ -269,7 +247,6 @@ fluidRow(
 plot1 <- renderPlot({
     plot_map(input$slider, input$var, input$plot_type)
   }, height = 600, width = 500)
-
 plot2 <- renderPlot({
     display_table <- table_of_interest(input$slider, input$var)
     
@@ -281,7 +258,6 @@ plot2 <- renderPlot({
               ylab = "AQI")
     }
   })
-
 # change layout of the plots
 fluidRow(
   column(8, plot1),
@@ -289,7 +265,14 @@ fluidRow(
 )
 ```
 
-## Group Member Contributions
+## <font size="5">Conclusion</font>
+
+## <font size="5">References</font>
+[1] Environmental Protection Agency. (2017). $\textit{Revised Air Quality Standards Pollution and Updates to the Air Quality Index (AQI)}$ [Fact sheet]. https://www.epa.gov/sites/default/files/2016-04/documents/2012_aqi_factsheet.pdf
+
+[2] “Why Air Pollution Is Worse in Winter.” AccuWeather, 25 Feb. 2020, https://www.accuweather.com/en/health-wellness/why-air-pollution-is-worse-in-winter/689434. 
+
+## <font size="5">Group Member Contributions</font>
 **Stuart Brabbs:** Data processing, generating data exploratory figures, generating bubble plot for Shiny app, and writing final report.  
 **Nathan Kernik:** Compiling final report.  
 **Yun Zhang:** Generating county map for Shiny app, constructing Shiny app, maintaining GitHub repository, and writing final report. 
