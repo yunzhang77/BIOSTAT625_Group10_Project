@@ -27,7 +27,7 @@ ggplot(data = df, aes(x = county, y = mean_pm25)) +
   ylab("Mean PM2.5") +
   labs(title = "2019 Mean PM2.5 Concentration by County")
 
-# makr scatter plot showing PM2.5 concentration by county population
+# make scatter plot showing PM2.5 concentration by county population
 ggplot(data = df, aes(x = countypop, y = mean_pm25)) +
   geom_point(color = "steelblue", size = 2.5) +
   xlab("County Population") +
