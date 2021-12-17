@@ -4,14 +4,14 @@
 library(ggplot2)
 
 # import air pollution data
-air_polllution_data <- readRDS("data/data2019.rds")
+air_pollution_data <- readRDS("data/data2019.rds")
 
 # identify counties with data and generate new data frame to store result
-county <- unique(air_polllution_data$COUNTY)
+county <- unique(air_pollution_data$COUNTY)
 mean_pm25 <- c()
 for (i in county) {
   mean_pm25 <- c(mean_pm25, 
-                 mean(air_polllution_data$`Daily Mean PM2.5 Concentration`[air_polllution_data$COUNTY==i]))
+                 mean(air_pollution_data$`Daily Mean PM2.5 Concentration`[air_pollution_data$COUNTY==i]))
 }
 
 # county population 
