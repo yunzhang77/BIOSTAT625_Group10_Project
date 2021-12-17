@@ -12,16 +12,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 https://github.com/yunzhang77/BIOSTAT625_Group10_Project
 
-```{r include = FALSE}
-library(shiny)
-library(shinydashboard)
-library(maps)
-library(stringr)
-library(ggplot2)
-library(viridis)
-library(dplyr)
-library(plotly)
-```
 ## Background
 PM2.5 refers to particular matter with a diameter equal to or less than 2.5 microns. PM2.5 is one of the major outdoor pollutants. It is primarily generated from combustion, such as fireplaces, car engines, coal (or natural gas-fired) power plants. PM2.5 is a leading environmental cause of poor health and premature death. Exposure to PM2.5 is associated with increased risk of heart attack, lung cancer, asthma, and low birth weight. People with existing lung and heart conditions, children, and seniors are at the greatest risk of PM2.5 exposure. In North America, approximately 670,000 cases of premature death are associated with PM2.5.
 
@@ -51,32 +41,30 @@ Visualization was accomplished via ggplot in R and via a Shiny app. Ggplot has g
 ## Results
 
 ## Figures
-```{r echo = FALSE}
-# import air pollution data
-air_polllution_data <- readRDS("data/data2019.rds")
+```{r echo = FALSE, warning = FALSE}
+# Load required libraries
+library(ggplot2)
 
+# import air pollution data
+air_pollution_data <- readRDS("data/data2019.rds")
 # identify counties with data and generate new data frame to store result
-county <- unique(air_polllution_data$COUNTY)
+county <- unique(air_pollution_data$COUNTY)
 mean_pm25 <- c()
 for (i in county) {
   mean_pm25 <- c(mean_pm25, 
-                 mean(air_polllution_data$`Daily Mean PM2.5 Concentration`[air_polllution_data$COUNTY==i]))
+                 mean(air_pollution_data$`Daily Mean PM2.5 Concentration`[air_pollution_data$COUNTY==i]))
 }
-
 # county population 
 countypop <- c(120502, 103856, 36785, 406211, 284900, 261670, 657974, 2046, 99423, 881217, 25032, 
                15052, 1274395, 296200, 160383, 8047, 372258, 1793561)
-
 df <- data.frame(county, countypop, mean_pm25)
-
 # make bar plot of mean PM2.5 by county
 ggplot(data = df, aes(x = county, y = mean_pm25)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   xlab("County") +
   ylab("Mean PM2.5") +
   labs(title = "2019 Mean PM2.5 Concentration by County")
-
-# make scatter plot showing PM2.5 concentration by county population
+# makr scatter plot showing PM2.5 concentration by county population
 ggplot(data = df, aes(x = countypop, y = mean_pm25)) +
   geom_point(color = "steelblue", size = 2.5) +
   xlab("County Population") +
