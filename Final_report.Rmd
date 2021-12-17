@@ -289,8 +289,6 @@ fluidRow(
 )
 ```
 
-## Conclusion
-
 ## Group Member Contributions
 **Stuart Brabbs:** Data processing, generating data exploratory figures, generating bubble plot for Shiny app, and writing final report.  
 **Nathan Kernik:** Compiling final report.  
