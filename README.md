@@ -6,5 +6,5 @@
 * `Data`: (folder) contains air quality data obtained from [EPA](https://www.epa.gov/outdoor-air-quality-data/download-daily-data).  
 * `Figures`: (folder) contains exploratory figures of the data set.  
 * `Exploratory_PM25.R`: R script contains code that generates exploratory figures.  
-* `Shiny.R`: R script contains code for data processing and building Shiny app. 
+* `Shiny_app.R`: R script contains code for data processing and building Shiny app. 
 
