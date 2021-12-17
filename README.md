@@ -7,4 +7,5 @@
 * `Figures`: (folder) contains exploratory figures of the data set.  
 * `Exploratory_PM25.R`: R script contains code that generates exploratory figures.  
 * `Shiny_app.R`: R script contains code for data processing and building Shiny app. 
+* `Final_report.Rmd`: final project report
 
