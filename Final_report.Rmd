@@ -103,7 +103,6 @@ grid.arrange(PM2.5_plot, AQI_plot, nrow = 1)
 ```{r echo = FALSE, message = FALSE}
 # load required libraries
 library(shiny)
-library(shinydashboard)
 library(maps)
 library(stringr)
 library(ggplot2)

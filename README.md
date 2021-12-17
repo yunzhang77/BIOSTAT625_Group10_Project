@@ -9,3 +9,6 @@
 * `Shiny_app.R`: R script contains code for data processing and building Shiny app. 
 * `Final_report.Rmd`: final project report
 
+# Access Final Report
+Because the final report contains shiny app, we published our final report using [shinyapps.io](https://umich-yun-zhang.shinyapps.io/Final_report/). If R markdown version of the final report fails to open, please try our final report hosted on shinyapps.io. 
+
