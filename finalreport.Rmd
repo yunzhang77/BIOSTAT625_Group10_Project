@@ -1,0 +1,87 @@
+---
+title: "Interactive Visualization of Air Quality (PM2.5) Data in Michigan"
+author: "Stuart Brabbs, Nathan Kernik, Yun Zhang"
+date: "12/17/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## GitHub Repository
+
+https://github.com/yunzhang77/BIOSTAT625_Group10_Project
+
+```{r include = FALSE}
+library(shiny)
+library(shinydashboard)
+library(maps)
+library(stringr)
+library(ggplot2)
+library(viridis)
+library(dplyr)
+library(plotly)
+```
+## Background
+PM2.5 refers to particular matter with a diameter equal to or less than 2.5 microns. PM2.5 is one of the major outdoor pollutants. It is primarily generated from combustion, such as fireplaces, car engines, coal (or natural gas-fired) power plants. PM2.5 is a leading environmental cause of poor health and premature death. Exposure to PM2.5 is associated with increased risk of heart attack, lung cancer, asthma, and low birth weight. People with existing lung and heart conditions, children, and seniors are at the greatest risk of PM2.5 exposure. In North America, approximately 670,000 cases of premature death are associated with PM2.5.
+
+## Question of Interest:
+Is there an association between PM2.5 concentration and the relative locations of the counties in Michigan?
+
+## Hypothesis:
+There will be higher PM2.5 concentration in urban and industrial areas, such as the Detroit and Grand Rapids metro areas. PM2.5 might also be linked with season changes and broader weather patterns (e.g., wildfires).
+
+## Data Set
+We will be using daily air quality data downloaded from the United States Environmental Protection Agency (EPA) for the state of Michigan, particularly with PM2.5 as the pollutant of interest. The data has 19 columns and 7,763 rows. Each row represents a daily PM2.5 entry from a data collection point in a Michigan county. We note that the data set does not contain information for every county in Michigan, but contains data from the largest counties by population and a good geographic spread of others. The lack of data from each county will need to be accounted for in visualization.
+
+## Challenges
+We do not have data for each county, as not every county contains EPA monitoring sites. We had to explore ways to complete the map with incomplete data.
+
+* 3 possible solutions:
+  1. if county is missing data, use data from the closest county with data
+  2. if county is missing data, use an average of counties with data weighted by distance
+  3. don’t plot data for every county, but only plot data from counties with data by using circles of different sizes instead
+
+## Goals
+Our goal was to make an interactive visualization of PM2.5 concentrations across Michigan.
+
+## Methods
+Visualization was accomplished via ggplot in R and via a Shiny app. Ggplot has geospatial mapping tools. PM2.5 gradients can be placed over the map.
+
+## Results
+
+## Figures
+```{r echo = FALSE}
+# import air pollution data
+air_polllution_data <- readRDS("data/data2019.rds")
+
+# identify counties with data and generate new data frame to store result
+county <- unique(air_polllution_data$COUNTY)
+mean_pm25 <- c()
+for (i in county) {
+  mean_pm25 <- c(mean_pm25, 
+                 mean(air_polllution_data$`Daily Mean PM2.5 Concentration`[air_polllution_data$COUNTY==i]))
+}
+
+# county population 
+countypop <- c(120502, 103856, 36785, 406211, 284900, 261670, 657974, 2046, 99423, 881217, 25032, 
+               15052, 1274395, 296200, 160383, 8047, 372258, 1793561)
+
+df <- data.frame(county, countypop, mean_pm25)
+
+# make bar plot of mean PM2.5 by county
+ggplot(data = df, aes(x = county, y = mean_pm25)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  xlab("County") +
+  ylab("Mean PM2.5") +
+  labs(title = "2019 Mean PM2.5 Concentration by County")
+
+# makr scatter plot showing PM2.5 concentration by county population
+ggplot(data = df, aes(x = countypop, y = mean_pm25)) +
+  geom_point(color = "steelblue", size = 2.5) +
+  xlab("County Population") +
+  ylab("Mean PM2.5") +
+  labs(title = "2019 Mean PM2.5 Concentration Scatterplot by County Population")
+```
+
+## Conclusion
