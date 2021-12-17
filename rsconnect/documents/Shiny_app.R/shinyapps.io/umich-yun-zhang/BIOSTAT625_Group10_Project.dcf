@@ -1,0 +1,14 @@
+name: BIOSTAT625_Group10_Project
+title: BIOSTAT625_Group10_Project
+username:
+account: umich-yun-zhang
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5343687
+bundleId: 5386420
+url: https://umich-yun-zhang.shinyapps.io/BIOSTAT625_Group10_Project/
+when: 1639779534.03562
+lastSyncTime: 1639779534.03563
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Data/data2019.xls|Data/data2020.rds|Data/data2020.xls|Exploratory_PM25.R|Figures/PM25Barplot.png|Figures/PM25Scatter.png|Final_report.Rmd|README.md

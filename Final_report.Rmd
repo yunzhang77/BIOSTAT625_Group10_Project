@@ -110,6 +110,7 @@ library(ggplot2)
 library(viridis)
 library(dplyr)
 library(plotly)
+library(mapproj)
 ```
 ```{r echo = FALSE}
 ################## DATA PROCESSING ##################
