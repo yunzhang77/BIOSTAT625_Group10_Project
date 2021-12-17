@@ -13,16 +13,16 @@ library(plotly)
 ################## DATA PROCESSING ##################
 # import air pollution data, modify date type, and remove unnecessary columns
 michigan <- map_data("county", "michigan")
-air_polllution_data <- readRDS("data/data2019.rds")
-date <- as.Date(air_polllution_data$Date)
+air_pollution_data <- readRDS("data/data2019.rds")
+date <- as.Date(air_pollution_data$Date)
 
 # generate processed data for plotting county map 
-air_polllution_data_trimmed_county <- data.frame(date, air_polllution_data$`Daily Mean PM2.5 Concentration`, 
-                                                 air_polllution_data$DAILY_AQI_VALUE, air_polllution_data$COUNTY)
-colnames(air_polllution_data_trimmed_county) <- c("Date", "PM2.5", "AQI", "County")
+air_pollution_data_trimmed_county <- data.frame(date, air_pollution_data$`Daily Mean PM2.5 Concentration`, 
+                                                 air_pollution_data$DAILY_AQI_VALUE, air_pollution_data$COUNTY)
+colnames(air_pollution_data_trimmed_county) <- c("Date", "PM2.5", "AQI", "County")
 
 # change the name of "St. Clair" county to match map data
-air_polllution_data_trimmed_county$County[air_polllution_data_trimmed_county$County == "St. Clair"] <- "St Clair"
+air_pollution_data_trimmed_county$County[air_pollution_data_trimmed_county$County == "St. Clair"] <- "St Clair"
 
 # generate list of Michigan counties from Maps package for visualization
 county_names <- map("county", regions = "Michigan", namesonly = TRUE, plot = FALSE)
@@ -30,18 +30,18 @@ county_names <- as.data.frame(str_to_title(sub("michigan,", "", county_names)))
 colnames(county_names) <- "County"
 
 # generate processed data for plotting bubble map
-air_polllution_data_trimmed_bubble <- data.frame(date, air_polllution_data$`Daily Mean PM2.5 Concentration`, 
-                                                 air_polllution_data$DAILY_AQI_VALUE, air_polllution_data$`Site ID`,
-                                                 air_polllution_data$SITE_LATITUDE, air_polllution_data$SITE_LONGITUDE)
-colnames(air_polllution_data_trimmed_bubble) <- c("Date", "PM2.5", "AQI", "Site", "Lat", "Long")
-sitenames <- as.data.frame(unique(air_polllution_data_trimmed_bubble$Site))
+air_pollution_data_trimmed_bubble <- data.frame(date, air_pollution_data$`Daily Mean PM2.5 Concentration`, 
+                                                 air_pollution_data$DAILY_AQI_VALUE, air_pollution_data$`Site ID`,
+                                                 air_pollution_data$SITE_LATITUDE, air_pollution_data$SITE_LONGITUDE)
+colnames(air_pollution_data_trimmed_bubble) <- c("Date", "PM2.5", "AQI", "Site", "Lat", "Long")
+sitenames <- as.data.frame(unique(air_pollution_data_trimmed_bubble$Site))
 colnames(sitenames) <- c("Site")
 
 # function that generates tables based on user input - returns a df contains average of 10-days data 
 table_of_interest <- function(date, type){
   date <- as.Date(date)
   # filter data that only contains 10-day of data
-  selected_entry <- subset(air_polllution_data_trimmed_county, Date >= date & Date < (date + 10))
+  selected_entry <- subset(air_pollution_data_trimmed_county, Date >= date & Date < (date + 10))
   
   # calculate mean values of each county if more than one record is found
   selected_entry_mean <- aggregate(.~County, data = selected_entry, mean)
@@ -61,7 +61,7 @@ table_of_interest <- function(date, type){
 # function that generates tables based on user input - returns a df contains average of 10-days data for bubble plot
 table_of_interest_bubble <- function(date, type){
   date <- as.Date(date)
-  selected_entry <- subset(air_polllution_data_trimmed_bubble, Date >= date & Date < (date + 10))
+  selected_entry <- subset(air_pollution_data_trimmed_bubble, Date >= date & Date < (date + 10))
   
   # calculate mean values of each site if more than one record is found
   selected_entry_mean <- aggregate(.~Site, data = selected_entry, mean)
