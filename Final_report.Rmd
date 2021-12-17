@@ -41,7 +41,7 @@ https://github.com/yunzhang77/BIOSTAT625_Group10_Project
   
 
 ## <font size="5">Results</font>
-  Through both the AQI and PM2.5 plots over time, we can see that levels are clearly higher overall in the larger urban areas, particularly areas around Metro Detroit and to a lesser extent Grand Rapids. Northern Michigan, and especially the Upper Peninsula, generally showed much lower levels than the more urban south. We also were able to observe a seasonal pattern, where pollution was 
+  Through both the AQI and PM2.5 plots over time, we can see that levels are clearly higher overall in the larger urban areas, particularly areas around Metro Detroit and to a lesser extent Grand Rapids. Northern Michigan, and especially the Upper Peninsula, generally showed much lower levels than the more urban south. We also were able to observe a seasonal pattern, where pollution was considerably higher during the winter months and then tapered off during the summer.
 
 ### <font size="5">Data Exploratory Plots</font>
 ```{r echo = FALSE, warning = FALSE, fig.width = 8, fig.height = 4, fig.align = "center"}
@@ -266,6 +266,7 @@ fluidRow(
 ```
 
 ## <font size="5">Conclusion</font>
+  PM2.5 pollution, and in turn AQI levels, are generally higher in denser urban and industrial areas, while rural areas are generally much lower, which we are able to see quite clearly through these plots. We also observed an interesting phenomenon in that air pollution was generally higher during the winter. A potential explanation for this, which is acknowledged by meteorologists, is that because cold air is slower and sinks to the ground, there is less air movement between the lower and upper levels of the atmosphere. As a result, pollutants are not dispersed as quickly tend to accumulate near the ground [2]. That we are able to see this in action is promising for the utility of these plots. 
 
 ## <font size="5">References</font>
 [1] Environmental Protection Agency. (2017). $\textit{Revised Air Quality Standards Pollution and Updates to the Air Quality Index (AQI)}$ [Fact sheet]. https://www.epa.gov/sites/default/files/2016-04/documents/2012_aqi_factsheet.pdf
